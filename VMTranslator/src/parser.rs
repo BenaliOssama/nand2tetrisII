@@ -4,6 +4,7 @@ use std::io::{self, BufRead};
 
 
 pub struct VMCommand {
+    original: String,
     command: Command,
     Arg1: Option<Arg>,
     Arg2: OPtion<Arg>,
