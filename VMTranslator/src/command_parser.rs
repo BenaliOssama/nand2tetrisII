@@ -1,13 +1,41 @@
 use std::fmt::Debug;
 
+use std::fmt::Debug;
+
 #[derive(Debug)]
 pub enum Inst {
-    PUSH,
-    POP,
+    Push(Segment, u16),
+    Pop(Segment, u16),
+
+    Add,
+    Sub,
+    Neg,
+
+    Eq,
+    Gt,
+    Lt,
+
+    And,
+    Or,
+    Not,
 }
+
+#[derive(Debug)]
+pub enum Segment {
+    Argument,
+    Local,
+    Static,
+    Constant,
+    This,
+    That,
+    Pointer,
+    Temp,
+}
+
 #[derive(Debug)]
 pub struct Cmd {
     pub inst: Inst,
+    pub segment: 
 }
 
 impl Cmd {
