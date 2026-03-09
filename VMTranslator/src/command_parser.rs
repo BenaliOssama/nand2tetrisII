@@ -1,18 +1,27 @@
-enum Inst {
+use std::fmt::Debug;
+
+#[derive(Debug)]
+pub enum Inst {
     PUSH,
     POP,
 }
-
+#[derive(Debug)]
 pub struct Cmd {
-    inst: Inst,
+    pub inst: Inst,
 }
 
 impl Cmd {
-    pub fn new(s: &str) -> Result<Cmd, String> {
-        todo!()
-    }
-
-    pub fn parse_command(s: &str) {
-        todo!()
+    pub fn parse_command(s: &str) -> Option<Cmd> {
+        use Inst::*;
+        let components: Vec<&str> = s.trim().split_whitespace().collect();
+        match components[0] {
+            "push" => {
+                return Some(Cmd { inst: PUSH });
+            }
+            "pop" => {
+                return Some(Cmd { inst: POP });
+            }
+            _ => None,
+        }
     }
 }

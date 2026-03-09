@@ -13,7 +13,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     while let Some(result) = file_reader.next_line() {
         let line = result?;
-        let cmd = Cmd::parse_command(&line);
+        let cmd = Cmd::parse_command(&line); //.unwrap();
+        match cmd {
+            Some(cmd) => {
+                println!("{:?}", cmd);
+            }
+            None => (),
+        }
     }
     Ok(())
 }
