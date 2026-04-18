@@ -4,6 +4,9 @@ mod file_reader;
 
 use command_parser::Cmd;
 use file_reader::FileReader;
+use code_writer::CodeWriter;
+use std::fs::File;
+
 use std::env;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -14,6 +17,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
 
     let mut file_reader = FileReader::new(&args[1])?;
+    // use can provide thier own file todo!()
+    let mut file = File::create("output.asm")?;
+    let mut code_writer = CodeWriter::new(file);
 
     let mut line_number =  0;
     while let Some(result) = file_reader.next_line() {
@@ -23,6 +29,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         match cmd {
             Some(cmd) => {
                 println!("{:?}", cmd);
+                code_writer.write_line(cmd);
             }
             None => (),
         }

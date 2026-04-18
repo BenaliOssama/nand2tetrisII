@@ -54,6 +54,7 @@ impl Cmd {
         }*/
         // 
         match components[0] {
+            // memory acess commands
             "push" | "pop"  => {
                 let (first , second) = Cmd::parse_arg(&components[1..], line_num);
 
