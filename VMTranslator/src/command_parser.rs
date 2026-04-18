@@ -1,4 +1,5 @@
 use std::fmt::Debug;
+use std::process;
 
 #[derive(Debug)]
 pub enum Inst {
@@ -18,6 +19,7 @@ pub enum Inst {
     Not,
 }
 
+
 #[derive(Debug)]
 pub enum Segment {
     Argument,
@@ -29,6 +31,7 @@ pub enum Segment {
     Pointer,
     Temp,
 }
+
 
 #[derive(Debug)]
 pub struct Cmd {
@@ -43,9 +46,17 @@ impl Cmd {
         let components: Vec<&str> = s.trim().split_whitespace().collect();
         match components[0] {
             "push" => {
-                return Some(Cmd {
-                    inst: Push(Argument, 0),
-                });
+                match components[1] {
+                    "constant" => {
+                        let Ok(cons) = components[2].parse::<u16>()  else {
+                            process::exit(1);
+                        };
+                        return Some(Cmd {
+                            inst: Push(Constant, cons),
+                        });
+                    }
+                    _ => None,
+                }
             }
             "pop" => {
                 return Some(Cmd {
