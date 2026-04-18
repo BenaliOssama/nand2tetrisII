@@ -1,4 +1,6 @@
 // SimpleAdd.vm
 push constant 7
 push constant 8
+pop constant 8
+push constant not_number
 add
