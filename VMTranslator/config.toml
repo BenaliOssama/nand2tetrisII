@@ -1,0 +1,41 @@
+# Hack VM Translator configuration (nand2tetris Project 7)
+# These values come from the Hack machine spec, change at your own risk.
+
+[vm]
+# Bootstrap: where the stack pointer starts on the Hack RAM
+stack_base = 256
+
+# Segment base addresses in Hack RAM.
+# LCL, ARG, THIS, THAT are pointers stored AT these addresses —
+# the translator emits code that dereferences them.
+[vm.segments]
+local    = 1      # RAM[1] holds the base of the `local` segment
+argument = 2      # RAM[2] holds the base of the `argument` segment
+this     = 3      # RAM[3] holds the base of `this`
+that     = 4      # RAM[4] holds the base of `that`
+
+# `temp` and `pointer` are fixed regions, not pointer-indirected.
+temp_base    = 5   # temp 0..7  → RAM[5]..RAM[12]
+pointer_base = 3   # pointer 0 → THIS (RAM[3]), pointer 1 → THAT (RAM[4])
+
+# `static` variables live at RAM[16]..RAM[255].
+# Each .vm file gets its own slice, addressed as Foo.i in assembly.
+static_base = 16
+static_end  = 255
+
+[vm.registers]
+# Symbolic names the assembler already knows, listed here for clarity
+# and so your code generator can reference them by name.
+sp   = 0    # stack pointer
+lcl  = 1
+arg  = 2
+this = 3
+that = 4
+
+[output]
+# File extension your translator writes
+extension = "asm"
+
+# Whether to emit a comment above each translated VM command
+# (useful for debugging, required by some graders, slows nothing down)
+emit_source_comments = true
